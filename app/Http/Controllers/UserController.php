@@ -22,16 +22,18 @@ class UserController extends Controller
         // return view('user', ['data' => $user]);
 
         // tambah data user dengan Eloquent Model
-        $data = [
-            'level_id' => 2,
-            'username' => 'manager_tiga',
-            'nama' => 'Manager 3',
-            'password' => Hash::make('12345')
-        ];
-        UserModel::create($data); // update data user
+        // $data = [
+        //     'level_id' => 2,
+        //     'username' => 'manager_tiga',
+        //     'nama' => 'Manager 3',
+        //     'password' => Hash::make('12345')
+        // ];
+        // UserModel::create($data); // update data user
 
         // coba akss model userModel
-        $user = UserModel::all();
+        $user = UserModel::findOr(20, ['username', 'nama'], function() {
+            abort(404);
+        });
         return view('user', ['data' => $user]);
     }
 }
