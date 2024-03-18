@@ -23,9 +23,12 @@ class UserController extends Controller
 
         // tambah data user dengan Eloquent Model
         $data = [
-            'nama' => 'Pelanggan Pertama',
+            'level_id' => 2,
+            'username' => 'manager_tiga',
+            'nama' => 'Manager 3',
+            'password' => Hash::make('12345')
         ];
-        UserModel::where('username', 'customer-1')->update($data); // update data user
+        UserModel::create($data); // update data user
 
         // coba akss model userModel
         $user = UserModel::all();
