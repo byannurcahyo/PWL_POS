@@ -316,8 +316,8 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'Manage Kategori',
-            'url' => url('/kategori'),
+            'text' => 'Kategori',
+            'url' => '/kategori',
             'icon' => 'fa fa-tags',
         ],
         [
@@ -329,7 +329,7 @@ return [
         ],
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
+            'text' => 'Profile',
             'url' => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
         ],
