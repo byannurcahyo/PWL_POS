@@ -71,23 +71,30 @@ class StokController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'barang_id' => 'required|integer',
-            'user_id' => 'required|integer',
-            'stok_tanggal' => 'required|date',
-            'stok_jumlah' => 'required|integer|max:1000'
-        ]);
+{
+    $request->validate([
+        'barang_id' => 'required|integer',
+        'user_id' => 'required|integer',
+        'stok_tanggal' => 'required|date',
+        'stok_jumlah' => 'required|integer|max:1000'
+    ]);
 
-        StokModel::create([
-            'barang_id' => $request->barang_id,
-            'user_id' => $request->user_id,
-            'stok_tanggal' => $request->stok_tanggal,
-            'stok_jumlah' => $request->stok_jumlah
-        ]);
-
-        return redirect('/stok')->with('success', 'Data stok berhasil ditambahkan!');
+    // Periksa apakah barang sudah ada dalam stok
+    $existingStok = StokModel::where('barang_id', $request->barang_id)->first();
+    if ($existingStok) {
+        return redirect('/stok')->with('error', 'Stok untuk barang ini sudah ada!');
     }
+
+    StokModel::create([
+        'barang_id' => $request->barang_id,
+        'user_id' => $request->user_id,
+        'stok_tanggal' => $request->stok_tanggal,
+        'stok_jumlah' => $request->stok_jumlah
+    ]);
+
+    return redirect('/stok')->with('success', 'Data stok berhasil ditambahkan!');
+}
+
 
     public function show($id)
     {

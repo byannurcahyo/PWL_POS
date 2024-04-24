@@ -47,8 +47,9 @@
                     <th>Jumlah</th>
                     <th>Subtotal</th>
                 </tr>
-            </thead>
+            </thead
             <tbody>
+                <?php $total = 0; ?>
                 @foreach ($transaksi->detail_penjualan as $key => $detail)
                 <tr>
                     <td>{{ $key + 1 }}</td>
@@ -57,10 +58,12 @@
                     <td>{{ $detail->harga }}</td>
                     <td>{{ $detail->jumlah }}</td>
                     <td>{{ 'Rp. ' . $detail->harga * $detail->jumlah }}</td>
+                    <?php $total += $detail->harga * $detail->jumlah; ?>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        <h4 style="text-align: right"><b>Total : {{ $total}}</b> </h4>
         @endempty
         <a href="{{ url('transaksi') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
     </div>
