@@ -17,4 +17,11 @@ class KategoriModel extends Model
     {
         return $this->hasMany(BarangModel::class, 'barang_id', 'barang_id');
     }
+
+    public function stok(): HasMany
+    {
+        return $this->hasMany(StokModel::class, 'barang_id', 'barang_id');
+    }
+
+    protected $guarded = [];
 }

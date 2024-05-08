@@ -24,6 +24,11 @@ class UserModel extends Authenticatable implements JWTSubject
     protected $primaryKey = 'user_id';
     protected $guarded = [];
 
+    public function level(): BelongsTo
+    {
+        return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
+    }
+
     // use HasFactory;
 
     // protected $table = 'm_user'; // Mendefisikan nama tabel yang digunakan
