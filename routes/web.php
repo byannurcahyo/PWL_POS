@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FileRenameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,3 +114,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
 Route::post('/file-upload', [FileUploadController::class, 'prosesfileUpload']);
+
+Route::get('/file-upload-rename', [FileRenameController::class, 'fileUploadRename']);
+Route::post('/file-upload-rename', [FileRenameController::class, 'prosesfileUploadRename']);

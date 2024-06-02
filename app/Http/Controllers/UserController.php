@@ -30,7 +30,7 @@ class UserController extends Controller
     }
 
     public function list(Request $request) {
-        $users = UserModel::select('user_id', 'username', 'nama', 'level_id')
+        $users = UserModel::select('user_id', 'username', 'nama', 'level_id', 'image')
             ->with('level');
 
         if ($request->level_id) {
@@ -72,13 +72,19 @@ class UserController extends Controller
             'nama' => 'required|string|max:100',
             'password' => 'required|min:5',
             'level_id' => 'required|integer',
+            'image' => 'required|max:2000,'
         ]);
+
+        $extFile = $request->file('image')->getClientOriginalName();
+        $namaFile = time() . "." . $extFile;
+        $request->file('image')->move('storage/posts', $namaFile);
 
         UserModel::create([
             'username' => $request->username,
             'nama' => $request->nama,
             'password' => bcrypt($request->password),
-            'level_id' => $request->level_id
+            'level_id' => $request->level_id,
+            'image' => $namaFile
         ]);
 
         return redirect('/user')->with('success', 'Data user berhasil disimpan');

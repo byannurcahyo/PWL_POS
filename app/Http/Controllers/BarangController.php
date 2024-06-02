@@ -29,7 +29,7 @@ class BarangController extends Controller
 
     public function list(Request $request)
     {
-        $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
+        $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'image')
             ->with('kategori');
 
         if ($request->kategori_id) {
@@ -76,9 +76,21 @@ class BarangController extends Controller
             'barang_nama' => 'required|string|max:100',
             'harga_beli' => 'required|integer',
             'harga_jual' => 'required|integer',
+            'image' => 'required|max:2000'
         ]);
 
-        BarangModel::create($request->all());
+        $extFile = $request->file('image')->getClientOriginalName();
+        $namaFile = time() . "." . $extFile;
+        $request->file('image')->move('storage/posts', $namaFile);
+
+        BarangModel::create([
+            'kategori_id' => $request->kategori_id,
+            'barang_kode' => $request->barang_kode,
+            'barang_nama' => $request->barang_nama,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'image' => $namaFile,
+        ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil ditambahkan');
     }
